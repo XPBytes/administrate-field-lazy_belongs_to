@@ -40,6 +40,10 @@ module Administrate
         options.fetch(:label_attribute) { 'name' }
       end
 
+      def size
+        options.fetch(:size) { 10 }
+      end
+
       def url_helpers
         Rails.application.routes.url_helpers
       end
