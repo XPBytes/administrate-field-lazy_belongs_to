@@ -13,6 +13,7 @@ function bindLazyBelongsTos() {
 
     let controller = undefined
     let lastResult = undefined
+    let lastDebounce = undefined
 
     function onQuery (event) {
       const value = event.currentTarget.value
@@ -22,47 +23,54 @@ function bindLazyBelongsTos() {
         controller.abort()
       }
 
+      if (lastDebounce) {
+        clearTimeout(lastDebounce)
+      }
+
       controller = new AbortController()
       const { signal } = controller
-      console.log({ hidden: target.value, selected: select.value, query: value })
 
-      fetch(options.url.replace('{q}', value).replace('%7Bq%7D', value), {
-        signal,
-        headers: { Accept: 'application/json' }
-      })
-        .then(r => r.json())
-        .then(r => r.map(e => ({ value: e[options.value], label: e[options.label] })))
-        .then(rs => {
-          const currentResult = JSON.stringify((rs))
+      lastDebounce = setTimeout(() => {
+        lastDebounce = undefined
 
-          if (lastResult && lastResult === currentResult) {
-            return
-          }
+        fetch(options.url.replace('{q}', value).replace('%7Bq%7D', value), {
+          signal,
+          headers: { Accept: 'application/json' }
+        })
+          .then(r => r.json())
+          .then(r => r.map(e => ({ value: e[options.value], label: e[options.label] })))
+          .then(rs => {
+            const currentResult = JSON.stringify((rs))
 
-          lastResult = currentResult
+            if (lastResult && lastResult === currentResult) {
+              return
+            }
 
-          while (select.lastChild) {
-            select.removeChild(select.lastChild);
-          }
+            lastResult = currentResult
 
-          const currentValue = target.value
+            while (select.lastChild) {
+              select.removeChild(select.lastChild);
+            }
 
-          rs.forEach(r => {
-            const option = document.createElement('option')
-            option.setAttribute('value', r.value)
-            option.innerText = r.label
-            option.selected = currentValue === r.value
-            select.appendChild(option)
+            const currentValue = target.value
+
+            rs.forEach(r => {
+              const option = document.createElement('option')
+              option.setAttribute('value', r.value)
+              option.innerText = r.label
+              option.selected = currentValue === r.value
+              select.appendChild(option)
+            })
+
+            select.setAttribute('size', "" + Math.max(2, Math.min(Number(select.getAttribute('data-max-size')), rs.length)))
           })
-
-          select.setAttribute('size', "" + Math.max(2, Math.min(Number(select.getAttribute('data-max-size')), rs.length)))
-        })
-        .catch(error => {
-          if (error.name === 'AbortError') {
-            return /* ignore, this is an aborted promise */
-          }
-          console.error(error)
-        })
+          .catch(error => {
+            if (error.name === 'AbortError') {
+              return /* ignore, this is an aborted promise */
+            }
+            console.error(error)
+          })
+      }, 250)
     }
 
     function showPopout() {
