@@ -1,6 +1,7 @@
 require 'administrate/field/belongs_to'
 require 'administrate/field/lazy_belongs_to/version'
 require 'rails/engine'
+require 'administrate/engine'
 
 module Administrate
   module Field
