@@ -1,0 +1,50 @@
+<%#
+# LazyBelongsTo Form Partial
+
+This partial renders an input element for belongs_to relationships.
+Instead of the default, this only loads the results lazily
+
+## Local variables:
+
+- `f`:
+  A Rails form generator, used to help create the appropriate input fields.
+- `field`:
+  An instance of [Administrate::Field::LazyBelongsTo][1].
+  A wrapper around the [Administrate::Field::BelongsTo][2] field
+
+[1]: http://www.rubydoc.info/gems/administrate-field-lazy_belongs_to/Administrate/Field/LazyBelongsTo
+[2]: http://www.rubydoc.info/gems/administrate/Administrate/Field/BelongsTo
+%>
+
+<div class="field-unit__label">
+  <%= f.label field.permitted_attribute %>
+</div>
+<div class="field-unit__field"
+     data-component="lazy-belongs-to"
+     data-lazy-belongs-to="<%=
+       {
+         url: field.templated_action,
+         value: field.value_attribute,
+         label: field.label_attribute
+       }.to_json
+     %>"
+>
+  <%= f.hidden_field(field.permitted_attribute) %>
+
+  <button type="button" disabled="disabled"><%= field.current_value %></button>
+
+  <div class="popout" data-target="popout">
+    <input type="search" class="search" placeholder="Search...">
+    <i class="icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" focusable="false" role="presentation">
+        <path d="M16.436 15.085l3.94 4.01a1 1 0 0 1-1.425 1.402l-3.938-4.006a7.5 7.5 0 1 1 1.423-1.406zM10.5 16a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z" fill="currentColor" fill-rule="evenodd"></path>
+      </svg>
+    </i>
+    <output class="results" data-target="output">
+      <select data-max-size="<%= field.size %>">
+        <option></option>
+      </select>
+    </output>
+  </div>
+</div>
+

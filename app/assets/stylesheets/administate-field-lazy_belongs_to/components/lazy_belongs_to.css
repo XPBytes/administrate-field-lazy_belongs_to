@@ -1,0 +1,63 @@
+.field-unit--lazy-belongs-to .popout {
+    display: none;
+    background-color: white;
+    box-shadow: rgba(13, 22, 38, 0.1) 0px 0px 0px 1px, rgba(13, 22, 38, 0.1) 0px 4px 11px;
+    margin-top: 8px;
+    position: absolute;
+    z-index: 2;
+    border-radius: 4px;
+}
+
+.field-unit--lazy-belongs-to .popout.active {
+    display: block;
+}
+
+.field-unit--lazy-belongs-to .search {
+    height: 100%;
+    width: auto;
+    line-height: 38px;
+    display: block;
+    padding: 8px;
+    position: relative;
+    box-sizing: border-box;
+    min-width: 240px;
+    border-color: rgb(204, 204, 204);
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    transition: all 100ms ease 0s;
+    margin: 8px;
+}
+
+.field-unit--lazy-belongs-to .icon {
+    display: none;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: rgb(204, 204, 204);
+    height: 18px;
+    width: 18px;
+    pointer-events: none;
+}
+
+.field-unit--lazy-belongs-to .search:placeholder-shown + .field-unit--lazy-belongs-to .icon {
+    display: block;
+}
+
+.field-unit--lazy-belongs-to .results {
+    display: block;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 0px inset;
+}
+
+.field-unit--lazy-belongs-to .results select {
+    width: 100%;
+    border: 0;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.field-unit--lazy-belongs-to .results option {
+    padding: 8px;
+}
