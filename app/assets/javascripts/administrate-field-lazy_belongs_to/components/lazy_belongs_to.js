@@ -105,7 +105,7 @@ function bindLazyBelongsTos() {
   })
 }
 
-if (Turbolinks && Turbolinks.supported) {
+if (window.Turbolinks && window.Turbolinks.supported) {
   document.addEventListener("turbolinks:load", function () {
     bindLazyBelongsTos()
   })
