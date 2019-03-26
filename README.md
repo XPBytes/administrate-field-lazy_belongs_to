@@ -27,7 +27,10 @@ Or install it yourself as:
 ## Usage
 
 This field needs a bit of setup, unless you're using [XPBytes/administrate-base_controller](https://github.com/XPBytes/administrate-base_controller),
-in order to lazily collect the values you're looking for:
+in order to lazily collect the values you're looking for. If you _are_ using the `BaseController`, you only need to 
+set-up the [fields](#fields).
+
+### Controller
 
 You need to have a route that yields an array of objects with at least the value and label you want to show. The best
 way is to re-use everything administrate offers you, which is the default behaviour of `Administrate::BaseController`:
@@ -53,6 +56,15 @@ end
 
 This way, your already existing route also is available in JSON. You may optimize this by only use the id and value
 field: `resources.to_json(fields: %i[id name])`.
+
+You could also use the dashboard display:
+```ruby
+render json: resources.map do |resource| 
+  { id: resource.id, name: dashboard.display_resource(resource) }
+end
+```
+
+### Fields
 
 The rest of the setup is as easy as any other field, except that you need to tell the field where to query the results,
 which key it should use for the value (defaults to `id`) and the label (defaults to `name`).
