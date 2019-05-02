@@ -1,18 +1,18 @@
-.field-unit--lazy-belongs-to .popout {
+.field-unit--lazy-belongs-to .lazy_belongs_to__popout {
     display: none;
     background-color: white;
-    box-shadow: rgba(13, 22, 38, 0.1) 0px 0px 0px 1px, rgba(13, 22, 38, 0.1) 0px 4px 11px;
+    box-shadow: rgba(13, 22, 38, 0.1) 0 0 0 1px, rgba(13, 22, 38, 0.1) 0 4px 11px;
     margin-top: 8px;
     position: absolute;
     z-index: 2;
     border-radius: 4px;
 }
 
-.field-unit--lazy-belongs-to .popout.active {
+.field-unit--lazy-belongs-to .lazy_belongs_to__popout.active {
     display: block;
 }
 
-.field-unit--lazy-belongs-to .search {
+.field-unit--lazy-belongs-to .lazy_belongs_to__popout_search {
     height: 100%;
     width: auto;
     line-height: 38px;

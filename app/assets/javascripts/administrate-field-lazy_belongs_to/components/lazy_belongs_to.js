@@ -63,6 +63,11 @@ function bindLazyBelongsTos() {
             })
 
             select.setAttribute('size', "" + Math.max(2, Math.min(Number(select.getAttribute('data-max-size')), rs.length)))
+
+            // Deselect if there was nothing selected
+            if (!currentValue) {
+              select.selectedIndex = -1
+            }
           })
           .catch(error => {
             if (error.name === 'AbortError') {
@@ -91,14 +96,33 @@ function bindLazyBelongsTos() {
       }
     })
 
+    function pickValue(value, label) {
+      target.value = value
+      button.textContent = label
+      hidePopout()
+    }
+
+    select.addEventListener('click', (e) => {
+      if (e.target.value && e.target.value === e.currentTarget.value) {
+        pickValue(
+          e.target.value,
+          e.target.textContent
+        )
+
+        e.stopImmediatePropagation()
+        return
+      }
+    })
+
     select.addEventListener('change', (e) => {
       if (!e.currentTarget.value) {
         return
       }
 
-      target.value = e.currentTarget.value
-      button.textContent = e.currentTarget.selectedOptions[0].textContent
-      hidePopout()
+      pickValue(
+        e.currentTarget.value,
+        e.currentTarget.selectedOptions[0].textContent
+      )
     })
 
     button.removeAttribute('disabled')
