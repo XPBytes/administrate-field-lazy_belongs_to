@@ -21,13 +21,15 @@ function bindLazyBelongsTos() {
       if (controller) {
         // abort the previous request
         controller.abort()
+        controller = new AbortController()
+      } else {
+        controller = new AbortController()
       }
 
       if (lastDebounce) {
         clearTimeout(lastDebounce)
       }
 
-      controller = new AbortController()
       const { signal } = controller
 
       lastDebounce = setTimeout(() => {
