@@ -27,7 +27,7 @@ function bindLazyBelongsTos() {
         clearTimeout(lastDebounce)
       }
 
-      controller = new AbortController()
+      const controller = new AbortController()
       const { signal } = controller
 
       lastDebounce = setTimeout(() => {
